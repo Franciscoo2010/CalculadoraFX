@@ -59,15 +59,10 @@ import org.ronaldpico.controller.CalculadoraController;
         Button btnCero =  nuevoBoton("0");
         Button btnPunto = nuevoBoton (".");
         Button btnIgual = nuevoBoton ("=");
-          btnIgual.setStyle("-fx-background-color: #688E23; -fx-text-fill:white; -fx-background-radius:5px; -fx-cursor: hand;");
-        btnIgual.setFont(Font.font("consolas", FontWeight.BOLD,20));
-        
-         btnIgual.setOnMousePressed(e -> {
-           btnIgual.setStyle("-fx- background-color; #111C29;"); 
-        });
-            btnIgual.setTranslateY(0);
-        
-       
+        Button btnEliminarTodo = nuevoBoton ("C");
+        Button btnBorrarEntrada = nuevoBoton ("CE");
+        Button btnEliminarUno = nuevoBoton ("⌫");
+        Button btnPorcentaje = nuevoBoton ("%");   
         Button btnRaiz = nuevoBoton ("√");
         Button btnInverso = nuevoBoton ("1/x");
         Button btnCuadrado = nuevoBoton ("x²");
@@ -94,6 +89,10 @@ import org.ronaldpico.controller.CalculadoraController;
         cuadroBotones.add(btnCuadrado, 1, 2);
         cuadroBotones.add(btnRaiz, 2, 2);
         cuadroBotones.add(btnDivision, 3, 2);
+        cuadroBotones.add(btnEliminarTodo, 0, 2);
+        cuadroBotones.add(btnEliminarUno, 1, 2);
+        cuadroBotones.add(btnBorrarEntrada, 2, 2);
+        cuadroBotones.add(btnPorcentaje, 3, 2);
         view.getChildren().addAll(pantalla, cuadroBotones);
  
     }
