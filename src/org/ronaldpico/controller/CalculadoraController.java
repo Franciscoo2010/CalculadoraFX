@@ -1,111 +1,112 @@
-
 package org.ronaldpico.controller;
- 
+
 import javafx.geometry.Pos;
-
 import javafx.scene.control.Label;
- 
+
 public class CalculadoraController {
- 
+
     private String opcion1 = "";
-
     private String operador = "";
-
     private String opcion2 = "";
-
     private boolean calculoTerminado = false;
- 
+
     public CalculadoraController() {
 
     }
- 
-public void procesoDeEntrada(String entrada, Label pantalla) {
 
-    if (entrada.equals("C")) {
+    public void procesoDeEntrada(String entrada, Label pantalla) {
 
-        opcion1 = ""; operador = ""; opcion2 = "";
+        if (entrada.equals("C")) {
 
-        calculoTerminado = false;
-
-        pantalla.setText("0");
-
-        return;
-
-    }
- 
-    if (entrada.matches("[0-9]")) {
-
-        // CORRECCIÓN: Si el cálculo terminó, el usuario quiere seguir sumando.
-
-      
-       
-
-        if (calculoTerminado) {
+            opcion1 = "";
+            operador = "";
+            opcion2 = "";
 
             calculoTerminado = false;
 
-            // No reseteamos opcion1, la mantenemos para seguir operando
+            pantalla.setText("0");
 
-            opcion2 = entrada; // El primer número de la nueva parte
+            return;
 
-            operador = ""; // Limpiamos el operador antiguo
+        }
 
-        } else {
+        if (entrada.matches("[0-9]")) {
 
-            if (operador.isEmpty()) {
+            if (calculoTerminado) {
 
-                opcion1 += entrada;
+                calculoTerminado = false;
+
+                opcion2 = entrada;
+
+                operador = "";
 
             } else {
 
-                opcion2 += entrada;
+                if (operador.isEmpty()) {
+
+                    opcion1 += entrada;
+
+                } else {
+
+                    opcion2 += entrada;
+
+                }
 
             }
 
+            actualizarPantalla(pantalla);
+
+        } else if (entrada.equals("+") || entrada.equals("-")
+                || entrada.equals("x") || entrada.equals("/")) {
+
+            operador = entrada;
+
+            calculoTerminado = false;
+
+            actualizarPantalla(pantalla);
+
+        } else if (entrada.equals("=")) {
+
+            if (!opcion1.isEmpty() && !opcion2.isEmpty()) {
+
+                if (operador.equals("+")) {
+
+                    opcion1 = resultadoSuma(opcion1, opcion2);
+
+                } else if (operador.equals("-")) {
+
+                    opcion1 = resultadoResta(opcion1, opcion2);
+
+                } else if (operador.equals("x")) {
+
+                    opcion1 = resultadoMultiplicacion(opcion1, opcion2);
+
+                } else if (operador.equals("/")) {
+
+                    opcion1 = resultadoDivision(opcion1, opcion2);
+
+                }
+
+                operador = "";
+
+                opcion2 = "";
+
+                calculoTerminado = true;
+
+            }
+
+            actualizarPantalla(pantalla);
+
         }
-
-        actualizarPantalla(pantalla);
-
-    } else if (entrada.equals("+")) {
-
-        // Si ya hay un resultado y presionan "+", el resultado actual (opcion1)
-
-        // se convierte en la base para la siguiente suma.
-
-        operador = entrada;
-
-        calculoTerminado = false; // Ya no está "terminado", está en proceso
-
-        actualizarPantalla(pantalla);
-
-    } else if (entrada.equals("=")) {
-
-        if (!opcion1.isEmpty() && !opcion2.isEmpty() && operador.equals("+")) {
-
-            opcion1 = resultadoSuma(opcion1, opcion2);
-
-            operador = "";
-
-            opcion2 = "";
-
-            calculoTerminado = true;
-
-        }
-
-        actualizarPantalla(pantalla);
 
     }
 
-}
- 
     private void actualizarPantalla(Label pantalla) {
-
-        // Aseguramos que el Label mantenga su configuración de ancho máximo
 
         pantalla.setMaxWidth(Double.MAX_VALUE);
 
         pantalla.setAlignment(Pos.CENTER_RIGHT);
- 
+
         if (operador.isEmpty()) {
 
             pantalla.setText(opcion1);
@@ -121,23 +122,67 @@ public void procesoDeEntrada(String entrada, Label pantalla) {
         }
 
     }
- 
+
     private String resultadoSuma(String numeroUno, String numeroDos) {
 
         String resultado;
-
-        // Usamos .trim() para quitar los espacios antes de convertir
 
         int datoUno = Integer.parseInt(numeroUno.trim());
 
         int datoDos = Integer.parseInt(numeroDos.trim());
 
         int suma = datoUno + datoDos;
- 
+
         return resultado = String.valueOf(suma);
 
     }
- 
-}
 
- 
+    private String resultadoResta(String numeroUno, String numeroDos) {
+
+        String resultado;
+
+        int datoUno = Integer.parseInt(numeroUno.trim());
+
+        int datoDos = Integer.parseInt(numeroDos.trim());
+
+        int resta = datoUno - datoDos;
+
+        return resultado = String.valueOf(resta);
+
+    }
+
+    private String resultadoMultiplicacion(String numeroUno, String numeroDos) {
+
+        String resultado;
+
+        int datoUno = Integer.parseInt(numeroUno.trim());
+
+        int datoDos = Integer.parseInt(numeroDos.trim());
+
+        int multiplicacion = datoUno * datoDos;
+
+        return resultado = String.valueOf(multiplicacion);
+
+    }
+
+    private String resultadoDivision(String numeroUno, String numeroDos) {
+
+        String resultado;
+
+        int datoUno = Integer.parseInt(numeroUno.trim());
+
+        int datoDos = Integer.parseInt(numeroDos.trim());
+
+        if (datoDos == 0) {
+
+            return "Error";
+
+        }
+
+        int division = datoUno / datoDos;
+
+        return resultado = String.valueOf(division);
+
+    }
+
+}
