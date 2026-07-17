@@ -6,7 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.ronaldpico.view.CalcuadoraView;
 import org.ronaldpico.controller.CalculadoraController; // Importa el controlador
-public class main extends Application {
+
+public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Hola Mundo");
         launch(args);
