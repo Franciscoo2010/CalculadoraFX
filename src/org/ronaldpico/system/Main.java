@@ -5,28 +5,22 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.ronaldpico.view.CalcuadoraView;
- 
+import org.ronaldpico.controller.CalculadoraController; // Importa el controlador
 public class main extends Application {
- 
     public static void main(String[] args) {
         System.out.println("Hola Mundo");
         launch(args);
     }
- 
     @Override
     public void start(Stage escenarioPrincipal) throws Exception {
- 
-        
-        //vista
-        CalcuadoraView calculadora = new CalcuadoraView();
+        // 1. Instanciamos el controlador
+        CalculadoraController controlador = new CalculadoraController();
+        // 2. Pasamos el controlador al constructor de la vista
+        CalcuadoraView calculadora = new CalcuadoraView(controlador);
         Pane raiz = new Pane(calculadora.getView());
-
- 
         Scene escena = new Scene(raiz, 266, 390);
- 
         escenarioPrincipal.setTitle("Calculadora de Andree");
         escenarioPrincipal.setScene(escena);
         escenarioPrincipal.show();
     }
- 
 }
